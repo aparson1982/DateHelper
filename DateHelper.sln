@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DateHelper", "DateHelper\DateHelper.csproj", "{5194D8A6-5E41-4BDA-B0C0-6BC25097F3FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{8429CF52-11FF-465C-B4A8-747D7DEB18AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5194D8A6-5E41-4BDA-B0C0-6BC25097F3FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5194D8A6-5E41-4BDA-B0C0-6BC25097F3FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5194D8A6-5E41-4BDA-B0C0-6BC25097F3FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5194D8A6-5E41-4BDA-B0C0-6BC25097F3FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8429CF52-11FF-465C-B4A8-747D7DEB18AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8429CF52-11FF-465C-B4A8-747D7DEB18AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8429CF52-11FF-465C-B4A8-747D7DEB18AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8429CF52-11FF-465C-B4A8-747D7DEB18AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C989CEC4-C39B-41DF-BFC6-B850C0D42252}
+	EndGlobalSection
+EndGlobal
