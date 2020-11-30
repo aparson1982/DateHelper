@@ -16,10 +16,8 @@ namespace DateHelper
             bool isTime = false;
             DateTime dDate1 = new DateTime();
             DateTime dDate2 = new DateTime();
-            int num;
             double dblTime = 0;
             TimeSpan time = TimeSpan.Zero;
-            string returnFormat = string.Empty;
             if (!string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || !string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds))
             {
                 DaysMonthsYearsHoursMinutesSeconds = Regex.Replace(DaysMonthsYearsHoursMinutesSeconds, @"\s", string.Empty);
@@ -27,7 +25,7 @@ namespace DateHelper
                 dmyhms = true;
             }
             
-                returnFormat = format;
+            var returnFormat = format;
             
             try
             {
@@ -48,24 +46,25 @@ namespace DateHelper
                     }
                     catch (Exception)
                     {
-
+                        // ignored
                     }
+
                     try
                     {
                         string.Format(format, time);
                     }
                     catch (Exception)
                     {
-
-                       
+                        // ignored
                     }
+
                     try
                     {
                         double.TryParse(date2, out dblTime);
                     }
                     catch (Exception)
                     {
-
+                        // ignored
                     }
                 }
                 else
@@ -78,196 +77,145 @@ namespace DateHelper
                 
                 if (dmyhms == true)
                 {
-                    if ((operation == "+") && (DaysMonthsYearsHoursMinutesSeconds.Equals("days", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("day", StringComparison.InvariantCultureIgnoreCase)))
+                    switch (operation)
                     {
-                        str = dDate1.AddDays(dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "+") && (DaysMonthsYearsHoursMinutesSeconds.Equals("months", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("month", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        str = dDate1.AddMonths((int)dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "+") && (DaysMonthsYearsHoursMinutesSeconds.Equals("years", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("year", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        str = dDate1.AddYears((int)dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "+") && (DaysMonthsYearsHoursMinutesSeconds.Equals("hours", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("hour", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        str = dDate1.AddHours(dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "+") && (DaysMonthsYearsHoursMinutesSeconds.Equals("minutes", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("minute", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        str = dDate1.AddMinutes(dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "+") && (DaysMonthsYearsHoursMinutesSeconds.Equals("seconds", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("second", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        str = dDate1.AddSeconds(dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "-") && (DaysMonthsYearsHoursMinutesSeconds.Equals("days", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("day", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        if (dblTime > 0)
+                        case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("days", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("day", StringComparison.InvariantCultureIgnoreCase):
+                            str = dDate1.AddDays(dblTime).ToString(returnFormat);
+                            break;
+                        case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("months", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("month", StringComparison.InvariantCultureIgnoreCase):
+                            str = dDate1.AddMonths((int)dblTime).ToString(returnFormat);
+                            break;
+                        case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("years", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("year", StringComparison.InvariantCultureIgnoreCase):
+                            str = dDate1.AddYears((int)dblTime).ToString(returnFormat);
+                            break;
+                        case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("hours", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("hour", StringComparison.InvariantCultureIgnoreCase):
+                            str = dDate1.AddHours(dblTime).ToString(returnFormat);
+                            break;
+                        case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("minutes", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("minute", StringComparison.InvariantCultureIgnoreCase):
+                            str = dDate1.AddMinutes(dblTime).ToString(returnFormat);
+                            break;
+                        case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("seconds", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("second", StringComparison.InvariantCultureIgnoreCase):
+                            str = dDate1.AddSeconds(dblTime).ToString(returnFormat);
+                            break;
+                        case "-" when DaysMonthsYearsHoursMinutesSeconds.Equals("days", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("day", StringComparison.InvariantCultureIgnoreCase):
                         {
-                            str = dDate1.AddDays(-dblTime).ToString(returnFormat);
+                            if (dblTime > 0)
+                            {
+                                str = dDate1.AddDays(-dblTime).ToString(returnFormat);
+                            }
+                            else if(dDate2 != DateTime.MinValue)
+                            {
+                                str = (dDate1 - dDate2).ToString(returnFormat);
+                            }
+                            else if (time != TimeSpan.Zero)
+                            {
+                                str = dDate1.Add(-time).ToString(returnFormat);
+                            }
+
+                            break;
                         }
-                        else if(dDate2 != DateTime.MinValue)
+                        case "-" when (DaysMonthsYearsHoursMinutesSeconds.Equals("months", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("month", StringComparison.InvariantCultureIgnoreCase)):
                         {
-                            str = (dDate1 - dDate2).ToString(returnFormat);
-                        }
-                        else if (time != TimeSpan.Zero)
-                        {
-                            str = dDate1.Add(-time).ToString(returnFormat);
-                        }
-                        
-                    }
-                    else if ((operation == "-") && (DaysMonthsYearsHoursMinutesSeconds.Equals("months", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("month", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        if (dblTime > 0)
-                        {
-                            str = dDate1.AddMonths(-(int)dblTime).ToString(returnFormat);
-                        }
-                        else if (dDate2 != DateTime.MinValue)
-                        {
-                            str = (dDate1 - dDate2).ToString(returnFormat);
-                        }
-                        else if (time != TimeSpan.Zero)
-                        {
-                            str = dDate1.Add(-time).ToString(returnFormat);
-                        }
+                            if (dblTime > 0)
+                            {
+                                str = dDate1.AddMonths(-(int)dblTime).ToString(returnFormat);
+                            }
+                            else if (dDate2 != DateTime.MinValue)
+                            {
+                                str = (dDate1 - dDate2).ToString(returnFormat);
+                            }
+                            else if (time != TimeSpan.Zero)
+                            {
+                                str = dDate1.Add(-time).ToString(returnFormat);
+                            }
                             //str = dDate1.AddMonths(-(int)dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "-") && (DaysMonthsYearsHoursMinutesSeconds.Equals("years", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("year", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        if (dblTime > 0)
-                        {
-                            str = dDate1.AddYears(-(int)dblTime).ToString(returnFormat);
+                            break;
                         }
-                        else if (dDate2 != DateTime.MinValue)
+                        case "-" when (DaysMonthsYearsHoursMinutesSeconds.Equals("years", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("year", StringComparison.InvariantCultureIgnoreCase)):
                         {
-                            str = (dDate1 - dDate2).ToString(returnFormat);
+                            if (dblTime > 0)
+                            {
+                                str = dDate1.AddYears(-(int)dblTime).ToString(returnFormat);
+                            }
+                            else if (dDate2 != DateTime.MinValue)
+                            {
+                                str = (dDate1 - dDate2).ToString(returnFormat);
+                            }
+                            else if (time != TimeSpan.Zero)
+                            {
+                                str = dDate1.Add(-time).ToString(returnFormat);
+                            }
+                            //str = dDate1.AddYears(-(int)dblTime).ToString(returnFormat);
+                            break;
                         }
-                        else if (time != TimeSpan.Zero)
+                        case "-" when (DaysMonthsYearsHoursMinutesSeconds.Equals("hours", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("hour", StringComparison.InvariantCultureIgnoreCase)):
                         {
-                            str = dDate1.Add(-time).ToString(returnFormat);
+                            if (dblTime > 0)
+                            {
+                                str = dDate1.AddHours(-dblTime).ToString(returnFormat);
+                            }
+                            else if (dDate2 != DateTime.MinValue)
+                            {
+                                str = (dDate1 - dDate2).ToString(returnFormat);
+                            }
+                            else if (time != TimeSpan.Zero)
+                            {
+                                str = dDate1.Add(-time).ToString(returnFormat);
+                            }
+                            //str = dDate1.AddHours(-dblTime).ToString(returnFormat);
+                            break;
                         }
-                        //str = dDate1.AddYears(-(int)dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "-") && (DaysMonthsYearsHoursMinutesSeconds.Equals("hours", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("hour", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        if (dblTime > 0)
+                        case "-" when (DaysMonthsYearsHoursMinutesSeconds.Equals("minutes", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("minute", StringComparison.InvariantCultureIgnoreCase)):
                         {
-                            str = dDate1.AddHours(-dblTime).ToString(returnFormat);
+                            if (dblTime > 0)
+                            {
+                                str = dDate1.AddMinutes(-dblTime).ToString(returnFormat);
+                            }
+                            else if (dDate2 != DateTime.MinValue)
+                            {
+                                str = (dDate1 - dDate2).ToString(returnFormat);
+                            }
+                            else if (time != TimeSpan.Zero)
+                            {
+                                str = dDate1.Add(-time).ToString(returnFormat);
+                            }
+                            //str = dDate1.AddMinutes(-dblTime).ToString(returnFormat);
+                            break;
                         }
-                        else if (dDate2 != DateTime.MinValue)
+                        case "-" when (DaysMonthsYearsHoursMinutesSeconds.Equals("seconds", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("second", StringComparison.InvariantCultureIgnoreCase)):
                         {
-                            str = (dDate1 - dDate2).ToString(returnFormat);
+                            if (dblTime > 0)
+                            {
+                                str = dDate1.AddSeconds(-dblTime).ToString(returnFormat);
+                            }
+                            else if (dDate2 != DateTime.MinValue)
+                            {
+                                str = (dDate1 - dDate2).ToString(returnFormat);
+                            }
+                            else if (time != TimeSpan.Zero)
+                            {
+                                str = dDate1.Add(-time).ToString(returnFormat);
+                            }
+                            //str = dDate1.AddSeconds(-dblTime).ToString(returnFormat);
+                            break;
                         }
-                        else if (time != TimeSpan.Zero)
-                        {
-                            str = dDate1.Add(-time).ToString(returnFormat);
-                        }
-                        //str = dDate1.AddHours(-dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "-") && (DaysMonthsYearsHoursMinutesSeconds.Equals("minutes", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("minute", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        if (dblTime > 0)
-                        {
-                            str = dDate1.AddMinutes(-dblTime).ToString(returnFormat);
-                        }
-                        else if (dDate2 != DateTime.MinValue)
-                        {
-                            str = (dDate1 - dDate2).ToString(returnFormat);
-                        }
-                        else if (time != TimeSpan.Zero)
-                        {
-                            str = dDate1.Add(-time).ToString(returnFormat);
-                        }
-                        //str = dDate1.AddMinutes(-dblTime).ToString(returnFormat);
-                    }
-                    else if ((operation == "-") && (DaysMonthsYearsHoursMinutesSeconds.Equals("seconds", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("second", StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        if (dblTime > 0)
-                        {
-                            str = dDate1.AddSeconds(-dblTime).ToString(returnFormat);
-                        }
-                        else if (dDate2 != DateTime.MinValue)
-                        {
-                            str = (dDate1 - dDate2).ToString(returnFormat);
-                        }
-                        else if (time != TimeSpan.Zero)
-                        {
-                            str = dDate1.Add(-time).ToString(returnFormat);
-                        }
-                        //str = dDate1.AddSeconds(-dblTime).ToString(returnFormat);
                     }
                 }
                 
-                else if ((operation == "+") && ((string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && time != TimeSpan.Zero))
+                else switch (operation)
                 {
-                    str = dDate1.Add(time).ToString(returnFormat);
+                    case "+" when ((string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && time != TimeSpan.Zero):
+                        str = dDate1.Add(time).ToString(returnFormat);
+                        break;
+                    case "-" when ((string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && dDate2 != DateTime.MinValue):
+                        str = (dDate1 - dDate2).ToString(returnFormat);
+                        break;
+                    case "-" when ((string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && time != TimeSpan.Zero):
+                        str = dDate1.Add(-time).ToString(returnFormat);
+                        break;
                 }
-                
-                else if ((operation == "-") && ((string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && dDate2 != DateTime.MinValue))
-                {
-                    str = (dDate1 - dDate2).ToString(returnFormat);
-                }
-                else if ((operation == "-") && ((string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && time != TimeSpan.Zero))
-                {
-                    str = dDate1.Add(-time).ToString(returnFormat);
-                }
 
 
-                //switch (operation)
-                //{
-                //    //case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("days", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("day", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddDays(dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("months", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("month", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddMonths((int)dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("years", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("year", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddYears((int)dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("hours", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("hour", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddHours(dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("minutes", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("minute", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddMinutes(dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "+" when DaysMonthsYearsHoursMinutesSeconds.Equals("seconds", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("second", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddSeconds(dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "+" when (string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && time != TimeSpan.Zero:
-                //    //    str = dDate1.Add(time).ToString(returnFormat);
-                //    //    break;
-
-                //    //case "-" when DaysMonthsYearsHoursMinutesSeconds.Equals("days", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("day", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddDays(-dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "-" when DaysMonthsYearsHoursMinutesSeconds.Equals("months", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("month", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddMonths(-(int)dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "-" when DaysMonthsYearsHoursMinutesSeconds.Equals("years", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("year", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddYears(-(int)dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "-" when DaysMonthsYearsHoursMinutesSeconds.Equals("hours", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("hour", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddHours(-dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "-" when DaysMonthsYearsHoursMinutesSeconds.Equals("minutes", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("minute", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddMinutes(-dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "-" when DaysMonthsYearsHoursMinutesSeconds.Equals("seconds", StringComparison.InvariantCultureIgnoreCase) || DaysMonthsYearsHoursMinutesSeconds.Equals("second", StringComparison.InvariantCultureIgnoreCase):
-                //    //    str = dDate1.AddSeconds(-dblTime).ToString(returnFormat);
-                //    //    break;
-                //    //case "-" when (string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && dDate2 != DateTime.MinValue:
-                //    //    str = (dDate1 - dDate2).ToString(returnFormat);
-                //    //    break;
-                //    //case "-" when (string.IsNullOrEmpty(DaysMonthsYearsHoursMinutesSeconds) || string.IsNullOrWhiteSpace(DaysMonthsYearsHoursMinutesSeconds)) && time != TimeSpan.Zero:
-                //    //    str = dDate1.Add(-time).ToString(returnFormat);
-                //    //    break;
-                //    //default:
-                //    //    throw new InvalidOperationException("The operation passed in was invalid.");
-                        
-
-                //}
 
             }
             catch (Exception e)
