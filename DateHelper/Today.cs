@@ -15,6 +15,7 @@ namespace DateHelper
             {
                 DateTime currentDate = DateTime.Now;
                 str = currentDate.ToString(format);
+                ReturnStatusCode = 0;
             }
             catch (Exception e)
             {

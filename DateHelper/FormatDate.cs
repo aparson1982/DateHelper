@@ -17,6 +17,7 @@ namespace DateHelper
             {
                 DateTime parseDate = DateTime.Parse(dateInput);
                 str = parseDate.ToString(format);
+                ReturnStatusCode = 0;
             }
             catch (Exception e)
             {
@@ -54,6 +55,7 @@ namespace DateHelper
                 }
 
                 str = span.ToString();
+                ReturnStatusCode = 0;
             }
             catch (Exception e)
             {
@@ -91,6 +93,7 @@ namespace DateHelper
                 }
 
                 str = span.ToString(format);
+                ReturnStatusCode = 0;
             }
             catch (Exception e)
             {

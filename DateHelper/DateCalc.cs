@@ -216,7 +216,7 @@ namespace DateHelper
                 }
 
 
-
+                ReturnStatusCode = 0;
             }
             catch (Exception e)
             {

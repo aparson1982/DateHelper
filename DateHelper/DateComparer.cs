@@ -45,6 +45,7 @@ namespace DateHelper
                 {
                     throw new ArgumentException("The comparison operator is not valid.");
                 }
+                ReturnStatusCode = 0;
             }
             catch (Exception e)
             {
@@ -55,7 +56,17 @@ namespace DateHelper
         }
 
         
-
+        public static bool IsDate(string date)
+        {
+            if (DateTime.TryParse(date, out _) == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         
 
         
